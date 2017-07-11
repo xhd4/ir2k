@@ -80,7 +80,7 @@ def parse_socket(is_record, path_cfg_file):
 
         except KeyboardInterrupt:
             if is_record:
-                with open(path_, "w") as keys_handle:
+                with open(path_cfg_file, "w") as keys_handle:
                     Config.write(keys_handle)
 
         finally:
