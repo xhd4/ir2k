@@ -13,4 +13,4 @@ This script allows you to use an infrared remote without LIRC. Tested on Xiaomi 
 	python ir2k.py -r /path/keys.cfg
 
 ### Daemon
-	python ir2k.py -d /path/keys.cfg
+	python ir2k.py -d keys.cfg > /dev/null 2>&1 &
