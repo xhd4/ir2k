@@ -40,7 +40,6 @@ def timeit(method):
             method(*args)
             last_time = time.time()
         return
-
     return timed
 
 
@@ -66,8 +65,8 @@ def exec_command(value):
 def parse_socket(is_record, path_cfg_file):
     fetch_config_keys(path_cfg_file)
     with open(SOCKET, "rb") as file:
-        event = file.read(EVENT_SIZE)
         try:
+            event = file.read(EVENT_SIZE)
             while event:
                 (tv_sec, tv_usec, type, code, value) = struct.unpack(FORMAT, event)
 
@@ -77,12 +76,10 @@ def parse_socket(is_record, path_cfg_file):
                     else:
                         exec_command(value)
                 event = file.read(EVENT_SIZE)
-
         except KeyboardInterrupt:
             if is_record:
                 with open(path_cfg_file, "w") as keys_handle:
                     Config.write(keys_handle)
-
         finally:
             kill_all_processes()
 
@@ -90,23 +87,21 @@ def parse_socket(is_record, path_cfg_file):
 def _argv(args):
     parser = ArgumentParser()
     opt = parser.add_argument
-    opt("app", help="")
-    opt("-d", "--daemon", help="")
-    opt("-r", "--record", help="")
-    opt("-c", "--cfg", default=PATH_CONFIG)
+    opt('app', help='')
+    opt('-d', '--daemon', action='store_false', help='Start Daemon')
+    opt('-r', '--record', action='store_false', help='Start Record Keys')
+    opt('-c', '--cfg", default=PATH_CONFIG, help='Path Keys.cfg file')
     return parser.parse_args(args)
 
 
 def main(args):
     argv = _argv(args)
     kill_all_processes()
-    if argv.record:
-        print 'Please click the button to record it.'
-        parse_socket(True, argv.cfg)
-        return
     if argv.daemon:
         parse_socket(False, argv.cfg)
-        return
+    elif argv.record:
+        print 'Please push the button to record'
+        parse_socket(True, argv.cfg)
 
 if __name__ == '__main__':
     main(sys.argv)
