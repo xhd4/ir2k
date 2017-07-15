@@ -88,8 +88,8 @@ def _argv(args):
     parser = ArgumentParser()
     opt = parser.add_argument
     opt('app', help='')
-    opt('-d', '--daemon', action='store_false', help='Start Daemon')
-    opt('-r', '--record', action='store_false', help='Start Record Keys')
+    opt('-d', '--daemon', action='store_true', help='Start Daemon')
+    opt('-r', '--record', action='store_true', help='Start Record Keys')
     opt('-c', '--cfg', type=str, default=PATH_CONFIG, help='Path Keys.cfg file')
     return parser.parse_args(args)
 
