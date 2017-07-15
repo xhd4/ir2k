@@ -47,7 +47,7 @@ def timeit(method):
 def record_keys(value):
     name_key = raw_input('Write name key {}, Example: KEY_POWER:'.format(value))
     Config.set('Keys', str(value), name_key)
-
+    
 
 @timeit
 def exec_command(value):
@@ -90,7 +90,7 @@ def _argv(args):
     opt('app', help='')
     opt('-d', '--daemon', action='store_false', help='Start Daemon')
     opt('-r', '--record', action='store_false', help='Start Record Keys')
-    opt('-c', '--cfg", default=PATH_CONFIG, help='Path Keys.cfg file')
+    opt('-c', '--cfg', type=str, default=PATH_CONFIG, help='Path Keys.cfg file')
     return parser.parse_args(args)
 
 
@@ -100,7 +100,7 @@ def main(args):
     if argv.daemon:
         parse_socket(False, argv.cfg)
     elif argv.record:
-        print 'Please push the button to record'
+        print 'Start record:'
         parse_socket(True, argv.cfg)
 
 if __name__ == '__main__':
