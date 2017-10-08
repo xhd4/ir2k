@@ -14,7 +14,19 @@ This script allows you to use an infrared remote without LIRC. Tested on Xiaomi 
 	modprobe usbhid
 	modprobe evdev
 	modprobe usbserial
-  
+
+## Install Shairport-sync
+
+	opkg update
+	opkg install shairport-sync-mini netatalk
+	mkdir -p /etc/storage/airplay/
+	cp shair.conf /etc/storage/airplay/shairport-sync.conf
+
+## Add to autorun
+
+	route add -net 224.0.0.0 netmask 224.0.0.0 br0
+	/opt/bin/shairport-sync -d -a AirPi
+
 # Usage
 ## Run
 ### Record Keys
@@ -22,7 +34,7 @@ This script allows you to use an infrared remote without LIRC. Tested on Xiaomi 
 
 ### Daemon
 	python ir2k.py -d > /dev/null 2>&1 &
-	
+
 	#OR
-	
+
 	python ir2k.py -d --cfg /path/keys.cfg > /dev/null 2>&1 &
